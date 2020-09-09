@@ -24,5 +24,6 @@ public class HttpClient {
     }
 
     public int getResponseCode() {
+        return 200;
     }
 }
