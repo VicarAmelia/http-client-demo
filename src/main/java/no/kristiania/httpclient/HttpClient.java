@@ -13,19 +13,27 @@ public class HttpClient {
                 "Host: " + hostname + "\r\n\r\n";
 
         socket.getOutputStream().write(request.getBytes());
+        StringBuilder line = readLine(socket);
 
-        StringBuilder line = new StringBuilder();
-        int c;
-        while ((c = socket.getInputStream().read()) != -1) {
-            if (c == '\n') {
-                break;
-            }
-            line.append((char)c);
-        }
         System.out.println(line);
         String[] responseLineParts = line.toString().split(" ");
         responseCode = Integer.parseInt(responseLineParts[1]);
+
+        private String readLine(Socket socket) throws IOException {
+
+            StringBuilder line = new StringBuilder();
+            int c;
+            while ((c = socket.getInputStream().read()) != -1) {
+                if (c == '\n') {
+                    break;
+                }
+                line.append((char)c);
+            }
+            return line.toString();
+        }
     }
+
+
 
     public static void main(String[] args) throws IOException {
         String hostname = "urlecho.appspot.com";
